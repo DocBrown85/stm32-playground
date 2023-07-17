@@ -34,34 +34,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := printf
+BUILD_ARTIFACT_NAME := stlink_printf
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-printf.elf \
+stlink_printf.elf \
 
 MAP_FILES += \
-printf.map \
+stlink_printf.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-printf.list \
+stlink_printf.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: printf.elf secondary-outputs
+main-build: stlink_printf.elf secondary-outputs
 
 # Tool invocations
-printf.elf printf.map: $(OBJS) $(USER_OBJS) /Users/avilla/devel/scratchpad/stm32-playground/printf/STM32U585AIIXQ_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "printf.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m33 -T"/Users/avilla/devel/scratchpad/stm32-playground/printf/STM32U585AIIXQ_FLASH.ld" --specs=nosys.specs -Wl,-Map="printf.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+stlink_printf.elf stlink_printf.map: $(OBJS) $(USER_OBJS) /Users/avilla/devel/scratchpad/stm32-playground/stlink_printf/STM32U585AIIXQ_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "stlink_printf.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m33 -T"/Users/avilla/devel/scratchpad/stm32-playground/stlink_printf/STM32U585AIIXQ_FLASH.ld" --specs=nosys.specs -Wl,-Map="stlink_printf.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -70,14 +70,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-printf.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "printf.list"
+stlink_printf.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "stlink_printf.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) default.size.stdout printf.elf printf.list printf.map
+	-$(RM) default.size.stdout stlink_printf.elf stlink_printf.list stlink_printf.map
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)

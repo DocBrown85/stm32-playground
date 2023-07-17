@@ -1,5 +1,5 @@
 
-printf.elf:     file format elf32-littlearm
+stlink_printf.elf:     file format elf32-littlearm
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
@@ -7,19 +7,19 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   1 .text         0000f150  08000238  08000238  00010238  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       00000170  0800f388  0800f388  0001f388  2**2
+  2 .rodata       00000174  0800f388  0800f388  0001f388  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .ARM          00000008  0800f4f8  0800f4f8  0001f4f8  2**2
+  3 .ARM          00000008  0800f4fc  0800f4fc  0001f4fc  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  4 .init_array   00000004  0800f500  0800f500  0001f500  2**2
+  4 .init_array   00000004  0800f504  0800f504  0001f504  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  5 .fini_array   00000004  0800f504  0800f504  0001f504  2**2
+  5 .fini_array   00000004  0800f508  0800f508  0001f508  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .data         00000070  20000000  0800f508  00020000  2**2
+  6 .data         00000070  20000000  0800f50c  00020000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  7 .bss          000010cc  20000070  0800f578  00020070  2**2
+  7 .bss          000010cc  20000070  0800f57c  00020070  2**2
                   ALLOC
-  8 ._user_heap_stack 00000604  2000113c  0800f578  0002113c  2**0
+  8 ._user_heap_stack 00000604  2000113c  0800f57c  0002113c  2**0
                   ALLOC
   9 .ARM.attributes 00000036  00000000  00000000  00020070  2**0
                   CONTENTS, READONLY
@@ -35,11 +35,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  15 .debug_line   0003858c  00000000  00000000  0009db49  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_str    00185dfe  00000000  00000000  000d60d5  2**0
+ 16 .debug_str    00185e05  00000000  00000000  000d60d5  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .comment      00000050  00000000  00000000  0025bed3  2**0
+ 17 .comment      00000050  00000000  00000000  0025beda  2**0
                   CONTENTS, READONLY
- 18 .debug_frame  0000cbfc  00000000  00000000  0025bf24  2**2
+ 18 .debug_frame  0000cbfc  00000000  00000000  0025bf2c  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -470,17 +470,13 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	printf("Hello World\n");
+	printf("Hello World!!!\n");
  8000624:	4803      	ldr	r0, [pc, #12]	; (8000634 <main+0x78>)
  8000626:	f00e fa15 	bl	800ea54 <puts>
-	/*
-	char data[] = {"Hey Universe\n\r"};
-	HAL_UART_Transmit(&huart2, (uint8_t*)&data, 20, HAL_MAX_DELAY);
-	*/
 	HAL_Delay(1000);
  800062a:	f44f 707a 	mov.w	r0, #1000	; 0x3e8
  800062e:	f002 fd61 	bl	80030f4 <HAL_Delay>
-	printf("Hello World\n");
+	printf("Hello World!!!\n");
  8000632:	e7f7      	b.n	8000624 <main+0x68>
  8000634:	0800f388 	.word	0x0800f388
 
@@ -7387,7 +7383,7 @@ LoopForever:
   ldr   sp, =_estack    /* set stack pointer */
  8002fd0:	200c0000 	.word	0x200c0000
 	ldr	r3, =_sidata
- 8002fd4:	0800f508 	.word	0x0800f508
+ 8002fd4:	0800f50c 	.word	0x0800f50c
 	ldr	r0, =_sdata
  8002fd8:	20000000 	.word	0x20000000
 	ldr	r3, =_edata
@@ -7470,7 +7466,7 @@ HAL_StatusTypeDef HAL_Init(void)
  8003036:	bf00      	nop
  8003038:	40022000 	.word	0x40022000
  800303c:	46020c00 	.word	0x46020c00
- 8003040:	0800f394 	.word	0x0800f394
+ 8003040:	0800f398 	.word	0x0800f398
  8003044:	20000000 	.word	0x20000000
 
 08003048 <HAL_InitTick>:
@@ -14483,7 +14479,7 @@ void HAL_GPIO_Init(GPIO_TypeDef  *GPIOx, const GPIO_InitTypeDef *pGPIO_Init)
  8005938:	e01e      	b.n	8005978 <HAL_GPIO_Init+0x1c4>
  800593a:	bf00      	nop
  800593c:	46020000 	.word	0x46020000
- 8005940:	0800f3ec 	.word	0x0800f3ec
+ 8005940:	0800f3f0 	.word	0x0800f3f0
       {
         /* Check the parameters */
         assert_param(IS_GPIO_ALL_INSTANCE(GPIOx));
@@ -19634,7 +19630,7 @@ HAL_StatusTypeDef HAL_RCC_ClockConfig(const RCC_ClkInitTypeDef   *const pRCC_Clk
  800777e:	bd80      	pop	{r7, pc}
  8007780:	46020c00 	.word	0x46020c00
  8007784:	40022000 	.word	0x40022000
- 8007788:	0800f394 	.word	0x0800f394
+ 8007788:	0800f398 	.word	0x0800f398
  800778c:	20000000 	.word	0x20000000
  8007790:	20000004 	.word	0x20000004
 
@@ -19935,7 +19931,7 @@ uint32_t HAL_RCC_GetSysClockFreq(void)
  800798a:	f85d 7b04 	ldr.w	r7, [sp], #4
  800798e:	4770      	bx	lr
  8007990:	46020c00 	.word	0x46020c00
- 8007994:	0800f3ac 	.word	0x0800f3ac
+ 8007994:	0800f3b0 	.word	0x0800f3b0
  8007998:	00f42400 	.word	0x00f42400
  800799c:	4b742400 	.word	0x4b742400
  80079a0:	46000000 	.word	0x46000000
@@ -19968,7 +19964,7 @@ uint32_t HAL_RCC_GetHCLKFreq(void)
  80079c8:	bd80      	pop	{r7, pc}
  80079ca:	bf00      	nop
  80079cc:	46020c00 	.word	0x46020c00
- 80079d0:	0800f394 	.word	0x0800f394
+ 80079d0:	0800f398 	.word	0x0800f398
  80079d4:	20000000 	.word	0x20000000
 
 080079d8 <HAL_RCC_GetPCLK1Freq>:
@@ -19995,7 +19991,7 @@ uint32_t HAL_RCC_GetPCLK1Freq(void)
  80079f4:	4618      	mov	r0, r3
  80079f6:	bd80      	pop	{r7, pc}
  80079f8:	46020c00 	.word	0x46020c00
- 80079fc:	0800f3a4 	.word	0x0800f3a4
+ 80079fc:	0800f3a8 	.word	0x0800f3a8
 
 08007a00 <HAL_RCC_GetPCLK2Freq>:
   * @note   Each time PCLK2 changes, this function must be called to update the
@@ -20021,7 +20017,7 @@ uint32_t HAL_RCC_GetPCLK2Freq(void)
  8007a1c:	4618      	mov	r0, r3
  8007a1e:	bd80      	pop	{r7, pc}
  8007a20:	46020c00 	.word	0x46020c00
- 8007a24:	0800f3a4 	.word	0x0800f3a4
+ 8007a24:	0800f3a8 	.word	0x0800f3a8
 
 08007a28 <HAL_RCC_GetPCLK3Freq>:
   * @note   Each time PCLK3 changes, this function must be called to update the
@@ -20047,7 +20043,7 @@ uint32_t HAL_RCC_GetPCLK3Freq(void)
  8007a44:	4618      	mov	r0, r3
  8007a46:	bd80      	pop	{r7, pc}
  8007a48:	46020c00 	.word	0x46020c00
- 8007a4c:	0800f3a4 	.word	0x0800f3a4
+ 8007a4c:	0800f3a8 	.word	0x0800f3a8
 
 08007a50 <RCC_SetFlashLatencyFromMSIRange>:
             voltage range.
@@ -22230,7 +22226,7 @@ void HAL_RCCEx_GetPLL1ClockFreq(PLL1_ClocksTypeDef *PLL1_Clocks)
  800899c:	46020c00 	.word	0x46020c00
  80089a0:	4b742400 	.word	0x4b742400
  80089a4:	46000000 	.word	0x46000000
- 80089a8:	0800f3ac 	.word	0x0800f3ac
+ 80089a8:	0800f3b0 	.word	0x0800f3b0
 
 080089ac <HAL_RCCEx_GetPLL2ClockFreq>:
   *         right PLL2CLK value. Otherwise, any configuration based on this function will be incorrect.
@@ -22565,7 +22561,7 @@ void HAL_RCCEx_GetPLL2ClockFreq(PLL2_ClocksTypeDef *PLL2_Clocks)
  8008c6c:	46020c00 	.word	0x46020c00
  8008c70:	4b742400 	.word	0x4b742400
  8008c74:	46000000 	.word	0x46000000
- 8008c78:	0800f3ac 	.word	0x0800f3ac
+ 8008c78:	0800f3b0 	.word	0x0800f3b0
 
 08008c7c <HAL_RCCEx_GetPLL3ClockFreq>:
   *         right PLL3CLK value. Otherwise, any configuration based on this function will be incorrect.
@@ -22903,7 +22899,7 @@ void HAL_RCCEx_GetPLL3ClockFreq(PLL3_ClocksTypeDef *PLL3_Clocks)
  8008f3c:	46020c00 	.word	0x46020c00
  8008f40:	4b742400 	.word	0x4b742400
  8008f44:	46000000 	.word	0x46000000
- 8008f48:	0800f3ac 	.word	0x0800f3ac
+ 8008f48:	0800f3b0 	.word	0x0800f3b0
 
 08008f4c <HAL_RCCEx_GetPeriphCLKFreq>:
   * @retval Frequency in Hz
@@ -23780,7 +23776,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint64_t PeriphClk)
  80094d2:	bf00      	nop
  80094d4:	46020c00 	.word	0x46020c00
  80094d8:	02dc6c00 	.word	0x02dc6c00
- 80094dc:	0800f3ac 	.word	0x0800f3ac
+ 80094dc:	0800f3b0 	.word	0x0800f3b0
  80094e0:	00f42400 	.word	0x00f42400
     }
     else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) && (srcclk == RCC_USART3CLKSOURCE_HSI))
@@ -24159,7 +24155,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint64_t PeriphClk)
  800977c:	f000 bdba 	b.w	800a2f4 <HAL_RCCEx_GetPeriphCLKFreq+0x13a8>
  8009780:	46020c00 	.word	0x46020c00
  8009784:	00f42400 	.word	0x00f42400
- 8009788:	0800f3ac 	.word	0x0800f3ac
+ 8009788:	0800f3b0 	.word	0x0800f3b0
       }
     }
     else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSERDY)) && (srcclk == RCC_ADCDACCLKSOURCE_HSE))
@@ -24568,7 +24564,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint64_t PeriphClk)
  8009a4a:	bf00      	nop
  8009a4c:	46020c00 	.word	0x46020c00
  8009a50:	00f42400 	.word	0x00f42400
- 8009a54:	0800f3ac 	.word	0x0800f3ac
+ 8009a54:	0800f3b0 	.word	0x0800f3b0
     }
     else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) && (srcclk == RCC_I2C2CLKSOURCE_HSI))
  8009a58:	4ba1      	ldr	r3, [pc, #644]	; (8009ce0 <HAL_RCCEx_GetPeriphCLKFreq+0xd94>)
@@ -24959,7 +24955,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint64_t PeriphClk)
  8009cde:	e309      	b.n	800a2f4 <HAL_RCCEx_GetPeriphCLKFreq+0x13a8>
  8009ce0:	46020c00 	.word	0x46020c00
  8009ce4:	00f42400 	.word	0x00f42400
- 8009ce8:	0800f3ac 	.word	0x0800f3ac
+ 8009ce8:	0800f3b0 	.word	0x0800f3b0
     }
     /* Clock not enabled for LPTIM34 */
     else
@@ -25378,7 +25374,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint64_t PeriphClk)
  8009f84:	e1b6      	b.n	800a2f4 <HAL_RCCEx_GetPeriphCLKFreq+0x13a8>
  8009f86:	bf00      	nop
  8009f88:	46020c00 	.word	0x46020c00
- 8009f8c:	0800f3ac 	.word	0x0800f3ac
+ 8009f8c:	0800f3b0 	.word	0x0800f3b0
  8009f90:	00f42400 	.word	0x00f42400
     }
   }
@@ -25792,7 +25788,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint64_t PeriphClk)
  800a236:	bf00      	nop
  800a238:	46020c00 	.word	0x46020c00
  800a23c:	00f42400 	.word	0x00f42400
- 800a240:	0800f3ac 	.word	0x0800f3ac
+ 800a240:	0800f3b0 	.word	0x0800f3b0
     }
     /* Check if LSI is ready and if DAC1 clock selection is LSI */
     else if ((HAL_IS_BIT_SET(RCC->BDCR, RCC_BDCR_LSIRDY)) && (srcclk == RCC_DAC1CLKSOURCE_LSI))
@@ -34176,7 +34172,7 @@ HAL_StatusTypeDef UART_SetConfig(UART_HandleTypeDef *huart)
  800d284:	40004800 	.word	0x40004800
  800d288:	40004c00 	.word	0x40004c00
  800d28c:	40005000 	.word	0x40005000
- 800d290:	0800f46c 	.word	0x0800f46c
+ 800d290:	0800f470 	.word	0x0800f470
       } /* if ( (lpuart_ker_ck_pres < (3 * huart->Init.BaudRate) ) ||
                 (lpuart_ker_ck_pres > (4096 * huart->Init.BaudRate) )) */
     } /* if (pclk != 0) */
@@ -34345,7 +34341,7 @@ HAL_StatusTypeDef UART_SetConfig(UART_HandleTypeDef *huart)
  800d398:	46bd      	mov	sp, r7
  800d39a:	e8bd 8fb0 	ldmia.w	sp!, {r4, r5, r7, r8, r9, sl, fp, pc}
  800d39e:	bf00      	nop
- 800d3a0:	0800f46c 	.word	0x0800f46c
+ 800d3a0:	0800f470 	.word	0x0800f470
 
 0800d3a4 <UART_AdvFeatureConfig>:
   * @brief Configure the UART peripheral advanced features.
@@ -35443,8 +35439,8 @@ static void UARTEx_SetNbDataToProcess(UART_HandleTypeDef *huart)
  800d9cc:	f85d 7b04 	ldr.w	r7, [sp], #4
  800d9d0:	4770      	bx	lr
  800d9d2:	bf00      	nop
- 800d9d4:	0800f484 	.word	0x0800f484
- 800d9d8:	0800f48c 	.word	0x0800f48c
+ 800d9d4:	0800f488 	.word	0x0800f488
+ 800d9d8:	0800f490 	.word	0x0800f490
 
 0800d9dc <SDMMC_Init>:
   * @param  SDMMCx: Pointer to SDMMC register base
@@ -38361,10 +38357,10 @@ static HAL_StatusTypeDef USB_CoreReset(USB_OTG_GlobalTypeDef *USBx)
  800e952:	3601      	adds	r6, #1
  800e954:	4798      	blx	r3
  800e956:	e7f2      	b.n	800e93e <__libc_init_array+0x1e>
- 800e958:	0800f500 	.word	0x0800f500
- 800e95c:	0800f500 	.word	0x0800f500
- 800e960:	0800f500 	.word	0x0800f500
- 800e964:	0800f504 	.word	0x0800f504
+ 800e958:	0800f504 	.word	0x0800f504
+ 800e95c:	0800f504 	.word	0x0800f504
+ 800e960:	0800f504 	.word	0x0800f504
+ 800e964:	0800f508 	.word	0x0800f508
 
 0800e968 <memset>:
  800e968:	4402      	add	r2, r0
@@ -38471,9 +38467,9 @@ static HAL_StatusTypeDef USB_CoreReset(USB_OTG_GlobalTypeDef *USBx)
  800ea42:	6022      	str	r2, [r4, #0]
  800ea44:	701d      	strb	r5, [r3, #0]
  800ea46:	e7db      	b.n	800ea00 <_puts_r+0x88>
- 800ea48:	0800f4b8 	.word	0x0800f4b8
- 800ea4c:	0800f4d8 	.word	0x0800f4d8
- 800ea50:	0800f498 	.word	0x0800f498
+ 800ea48:	0800f4bc 	.word	0x0800f4bc
+ 800ea4c:	0800f4dc 	.word	0x0800f4dc
+ 800ea50:	0800f49c 	.word	0x0800f49c
 
 0800ea54 <puts>:
  800ea54:	4b02      	ldr	r3, [pc, #8]	; (800ea60 <puts+0xc>)
@@ -38555,9 +38551,9 @@ static HAL_StatusTypeDef USB_CoreReset(USB_OTG_GlobalTypeDef *USBx)
  800eaf4:	f04f 37ff 	mov.w	r7, #4294967295	; 0xffffffff
  800eaf8:	e7ea      	b.n	800ead0 <__swbuf_r+0x6c>
  800eafa:	bf00      	nop
- 800eafc:	0800f4b8 	.word	0x0800f4b8
- 800eb00:	0800f4d8 	.word	0x0800f4d8
- 800eb04:	0800f498 	.word	0x0800f498
+ 800eafc:	0800f4bc 	.word	0x0800f4bc
+ 800eb00:	0800f4dc 	.word	0x0800f4dc
+ 800eb04:	0800f49c 	.word	0x0800f49c
 
 0800eb08 <__swsetup_r>:
  800eb08:	4b32      	ldr	r3, [pc, #200]	; (800ebd4 <__swsetup_r+0xcc>)
@@ -38649,9 +38645,9 @@ static HAL_StatusTypeDef USB_CoreReset(USB_OTG_GlobalTypeDef *USBx)
  800ebd0:	e7f7      	b.n	800ebc2 <__swsetup_r+0xba>
  800ebd2:	bf00      	nop
  800ebd4:	2000000c 	.word	0x2000000c
- 800ebd8:	0800f4b8 	.word	0x0800f4b8
- 800ebdc:	0800f4d8 	.word	0x0800f4d8
- 800ebe0:	0800f498 	.word	0x0800f498
+ 800ebd8:	0800f4bc 	.word	0x0800f4bc
+ 800ebdc:	0800f4dc 	.word	0x0800f4dc
+ 800ebe0:	0800f49c 	.word	0x0800f49c
 
 0800ebe4 <__sflush_r>:
  800ebe4:	898a      	ldrh	r2, [r1, #12]
@@ -38825,9 +38821,9 @@ static HAL_StatusTypeDef USB_CoreReset(USB_OTG_GlobalTypeDef *USBx)
  800ed52:	bf08      	it	eq
  800ed54:	68ec      	ldreq	r4, [r5, #12]
  800ed56:	e7da      	b.n	800ed0e <_fflush_r+0x22>
- 800ed58:	0800f4b8 	.word	0x0800f4b8
- 800ed5c:	0800f4d8 	.word	0x0800f4d8
- 800ed60:	0800f498 	.word	0x0800f498
+ 800ed58:	0800f4bc 	.word	0x0800f4bc
+ 800ed5c:	0800f4dc 	.word	0x0800f4dc
+ 800ed60:	0800f49c 	.word	0x0800f49c
 
 0800ed64 <std>:
  800ed64:	2300      	movs	r3, #0
@@ -38952,7 +38948,7 @@ static HAL_StatusTypeDef USB_CoreReset(USB_OTG_GlobalTypeDef *USBx)
  800ee76:	61a3      	str	r3, [r4, #24]
  800ee78:	e7d2      	b.n	800ee20 <__sinit+0xc>
  800ee7a:	bf00      	nop
- 800ee7c:	0800f494 	.word	0x0800f494
+ 800ee7c:	0800f498 	.word	0x0800f498
  800ee80:	0800edad 	.word	0x0800edad
 
 0800ee84 <__sfp>:
@@ -39007,7 +39003,7 @@ static HAL_StatusTypeDef USB_CoreReset(USB_OTG_GlobalTypeDef *USBx)
  800ef02:	603b      	str	r3, [r7, #0]
  800ef04:	e7ee      	b.n	800eee4 <__sfp+0x60>
  800ef06:	bf00      	nop
- 800ef08:	0800f494 	.word	0x0800f494
+ 800ef08:	0800f498 	.word	0x0800f498
  800ef0c:	ffff0001 	.word	0xffff0001
 
 0800ef10 <_fwalk_reent>:
