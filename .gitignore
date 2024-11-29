@@ -43,3 +43,7 @@
 
 # Libraries
 /lib
+
+# CubeIDE build directories
+Debug/
+Release/
