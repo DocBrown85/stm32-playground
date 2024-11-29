@@ -19,6 +19,18 @@ void MM_Process(void) {
 }
 
 /**
+ * @brief  EXTI line detection callback.
+ * @param  uint16_t GPIO_Pin Specifies the pin connected EXTI line
+ * @retval None
+ */
+void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
+{
+
+
+}
+
+
+/**
  * @brief  Implementation of printf() function
  * @param None
  * @retval None
